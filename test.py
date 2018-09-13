@@ -49,10 +49,15 @@ def SVD(A):
     V = np.zeros(eigenvectors.shape)
 
     for i in range(eigenvectors.shape[1]):
-        V[:,1] = eigenvectors[:,i] / np.norm(eigenvectors[:,i])
+        V[:,i] = eigenvectors[:,i] / np.linalg.norm(eigenvectors[:,i])
 
+    U = np.zeros((A.shape[0], sigma.size))
+    for i in range(sigma.size):
+        U[:,i] = 1/sigma[i]*A.dot(V[:,i])
 
-    return sigma,V
+    S = np.diag(sigma)
+
+    return U,S,V
 
 
 
@@ -67,7 +72,8 @@ a = np.array(((
     (10,11,12),
 )))
 
-S, V = SVD(a)
+U, S, V = SVD(a)
+A_AGAIN = np.matmul(np.matmul(U,S),np.transpose(V))
 print('S:\n',S)
 print('V:\n',V)
 
