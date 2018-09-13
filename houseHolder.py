@@ -30,13 +30,12 @@ def autovalores(A):
     T = A
     pQ = np.eye(a.shape[0])
     for i in range(1, 10000, 1):
- #       print('\n', T)
- #       print('------------------')
         Q, R = qr(T)
         T = np.matmul(R, Q)
         pQ = np.matmul(pQ, Q)
 
     return np.diag(T), pQ
+
 
 
 diagonal, autovectores = autovalores(a)
