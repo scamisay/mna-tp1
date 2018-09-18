@@ -76,8 +76,8 @@ def qr_wilkinson(B):
         mu = T[k - 1, k - 1]
         while abs(T[k - 1, k - 2]) > porc * (abs(T[k - 2, k - 2]) + abs(T[k - 1, k - 1])):
             W = T - mu*np.identity(T.shape[0])
-            #Q, R = qr(W)
-            Q, R = np.linalg.qr(W)
+            Q, R = qr(W)
+            #Q, R = np.linalg.qr(W)
             T = np.matmul(R, Q) + mu*np.identity(T.shape[0])
 
             temp = pQ
