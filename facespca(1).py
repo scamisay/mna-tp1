@@ -10,6 +10,7 @@ from scipy import ndimage as im
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import svm
+from s1.svd import *
 
 mypath      = 'att_faces/'
 onlydirs    = [f for f in listdir(mypath) if isdir(join(mypath, f))]
@@ -59,13 +60,15 @@ meanimage = np.mean(images,0)
 fig, axes = plt.subplots(1,1)
 axes.imshow(np.reshape(meanimage,[versize,horsize])*255,cmap='gray')
 fig.suptitle('Imagen media')
+plt.show()
 
 #resto la media
 images  = [images[k,:]-meanimage for k in range(images.shape[0])]
 imagetst= [imagetst[k,:]-meanimage for k in range(imagetst.shape[0])]
 
 #PCA
-U,S,V = np.linalg.svd(images,full_matrices = False)
+#U,S,V = np.linalg.svd(images,full_matrices = False)
+U,S,V = svd(images)
 
 #Primera autocara...
 eigen1 = (np.reshape(V[0,:],[versize,horsize]))*255
@@ -105,4 +108,3 @@ axes.semilogy(range(nmax),(1-accs)*100)
 axes.set_xlabel('No. autocaras')
 axes.grid(which='Both')
 fig.suptitle('Error')
-
